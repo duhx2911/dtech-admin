@@ -1,0 +1,63 @@
+.user-section {
+  width: 100%;
+  min-height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+.login-wrapper {
+  width: 400px;
+  padding: 65px 50px 54px 50px;
+  background-color: white;
+  border-radius: 10px;
+  .login-title {
+    text-align: center;
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 30px;
+  }
+  .ant-form-item-control-input-content {
+    flex: auto;
+    display: flex;
+    max-width: 100%;
+    justify-content: space-between;
+    .input-login {
+      height: 45px;
+      border-bottom: 1px solid;
+      border-radius: 0px;
+      padding: 10px;
+    }
+    input.ant-input {
+      padding-left: 10px;
+      font-size: 16px;
+      font-weight: 500;
+    }
+  }
+  .btn-submit {
+    .ant-form-item-control-input-content {
+      justify-content: center;
+      .login-form-button {
+        width: 100%;
+        background-image: linear-gradient(
+          to right,
+          #36d1dc 0%,
+          #5b86e5 51%,
+          #36d1dc 100%
+        );
+        background-size: 200% auto;
+        text-transform: uppercase;
+        font-size: 16px;
+        height: 50px;
+        transition: 0.5s;
+        border-radius: 25px;
+        &:hover {
+          background-position: right center; /* change the direction of the change here */
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}
