@@ -20,15 +20,7 @@ const login =
         if (response.data.msg === "Đăng nhập thành công.") {
           dispatch({ type: USER_LOGIN_SUCCESS, payload: response.data });
 
-          const userInfo = {
-            accessToken: response.data.accessToken,
-            refreshToken: response.data.refreshToken,
-            username: response.data.user.username,
-            fullname: response.data.user.fullname,
-            email: response.data.user.email,
-            avatar: response.data.user.avatar,
-          };
-          localStorage.setItem("userInfo", JSON.stringify(userInfo));
+          localStorage.setItem("userInfo", JSON.stringify(response.data));
         }
       }
     } catch (error: any) {

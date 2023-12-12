@@ -24,6 +24,7 @@ import type { MenuProps } from "antd";
 import { NavLink } from "react-router-dom";
 import store from "../../store";
 import { logout } from "../../store/actions/actionLogin";
+import { useSelector } from "react-redux";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -50,7 +51,13 @@ const items: MenuItem[] = [
     <HomeOutlined />
   ),
   getItem("Thống kê", "2", <PieChartOutlined />),
-  getItem("Đơn hàng", "order", <ShoppingCartOutlined />),
+  getItem(
+    <NavLink className={"nav-admin"} to={"don-hang"}>
+      {"Đơn hàng"}
+    </NavLink>,
+    "order",
+    <ShoppingCartOutlined />
+  ),
   getItem("Khuyến mại", "promotion", <TagOutlined />),
   getItem("Quản lý", "sub1", <ToolOutlined />, [
     getItem(
@@ -125,6 +132,7 @@ const ContentAdmin = ({ children }: { children: ReactNode }) => {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+  const dataUser: any = useSelector<any>((state) => state.userLogin.userInfo);
   return (
     <Layout>
       <Sider
@@ -182,7 +190,11 @@ const ContentAdmin = ({ children }: { children: ReactNode }) => {
                 placement="bottomRight"
                 arrow={{ pointAtCenter: true }}
               >
-                <Avatar size={32} src={""} style={{ cursor: "pointer" }} />
+                <Avatar
+                  size={32}
+                  src={dataUser?.user.avatar}
+                  style={{ cursor: "pointer" }}
+                />
               </Dropdown>
             </div>
           </div>

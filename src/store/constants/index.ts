@@ -7,3 +7,7 @@ export const SAVE_IMAGES = "SAVE_IMAGES";
 export const SAVE_LIST_IMAGES = "SAVE_LIST_IMAGES";
 export const UPDATE_LIST_IMAGE = "UPDATE_LIST_IMAGE";
 export const DELETE_IMAGE = "DELETE_IMAGE";
+
+export const SAVE_ORDER = "SAVE_ORDERS";
+export const UPDATE_ORDER = "UPDATE_ORDER";
+export const DELETE_ORDER = "DELETE_ORDER";

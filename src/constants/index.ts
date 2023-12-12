@@ -35,7 +35,29 @@ export interface Staff {
   birthday: string;
   address: string;
 }
+
+export interface Order {
+  id: number;
+  orderCode: string;
+  id_staff: number;
+  fullname: string;
+  address: string;
+  email: string;
+  paymentMethod: string;
+  phone: string;
+  voucher: string;
+  discount: number;
+  shippingFee: number;
+  totalPrice: number;
+  totalPay: number;
+  status: string;
+}
 export const ENV_BE = "http://localhost:8000";
 export const ACCESS_TOKEN = "access-token";
 export const REFRESH_TOKEN = "refresh-token";
 export const USER_INFO = "user-info";
+
+export const convertPriceToVND = new Intl.NumberFormat("vi-VN", {
+  style: "currency",
+  currency: "VND",
+});
