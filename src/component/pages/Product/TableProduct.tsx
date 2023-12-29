@@ -74,20 +74,6 @@ const TableProduct = ({ openEdit, deletePrd }: any) => {
         </span>
       ),
     },
-    {
-      title: "Giá niêm yết",
-      dataIndex: "listed_price",
-      key: "listed_price",
-      width: 150,
-      render: (value: number) => (
-        <span>
-          {value.toLocaleString("it-IT", {
-            style: "currency",
-            currency: "VND",
-          })}
-        </span>
-      ),
-    },
 
     {
       title: "Số lượng",

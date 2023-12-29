@@ -78,7 +78,7 @@ const CategoryAdminPage = () => {
         </Button>
         <TableCategory openEdit={openEdit} deleteCate={deleteCate} />
         <Modal
-          title={flag === FLAG.CREATE ? "Thêm danh mục" : "Sửa sản phẩm"}
+          title={flag === FLAG.CREATE ? "Thêm danh mục" : "Sửa danh mục"}
           centered
           open={open}
           onCancel={() => setOpen(false)}

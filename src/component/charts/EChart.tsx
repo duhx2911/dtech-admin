@@ -1,38 +1,21 @@
 import { Column } from "@ant-design/plots";
+import useFetch from "../../hooks/useFetch";
+import { useEffect, useState } from "react";
 // import { ApexOptions } from "apexcharts";
 
 function EChart() {
-  const data = [
-    {
-      type: "iPhone",
-      sales: 38,
-    },
-    {
-      type: "iPad",
-      sales: 52,
-    },
-    {
-      type: "Mac",
-      sales: 61,
-    },
-    {
-      type: "Watch",
-      sales: 145,
-    },
-    {
-      type: "Âm thanh",
-      sales: 48,
-    },
-    {
-      type: "Phụ kiện",
-      sales: 38,
-    },
-  ];
+  const { data: dataEChart } = useFetch("statistical");
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    if (dataEChart && dataEChart.length) {
+      setData(dataEChart);
+    }
+  }, [dataEChart]);
   const config: any = {
     data,
-    xField: "type",
+    xField: "category",
     yField: "sales",
-    seriesField: "type",
+    seriesField: "category",
     legend: {
       position: "top-left",
     },

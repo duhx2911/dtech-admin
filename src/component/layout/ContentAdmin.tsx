@@ -1,4 +1,4 @@
-import React, { useState, ReactNode } from "react";
+import React, { useState, ReactNode, useEffect } from "react";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -58,7 +58,13 @@ const items: MenuItem[] = [
     "order",
     <ShoppingCartOutlined />
   ),
-  getItem("Khuyến mại", "promotion", <TagOutlined />),
+  getItem(
+    <NavLink className={"nav-admin"} to={"khuyen-mai"}>
+      {"Khuyến mại"}
+    </NavLink>,
+    "promotion",
+    <TagOutlined />
+  ),
   getItem("Quản lý", "sub1", <ToolOutlined />, [
     getItem(
       <NavLink className={"nav-admin"} to={"category"}>
@@ -133,6 +139,7 @@ const ContentAdmin = ({ children }: { children: ReactNode }) => {
     token: { colorBgContainer },
   } = theme.useToken();
   const dataUser: any = useSelector<any>((state) => state.userLogin.userInfo);
+
   return (
     <Layout>
       <Sider
@@ -171,7 +178,7 @@ const ContentAdmin = ({ children }: { children: ReactNode }) => {
                 height: 64,
               }}
             />
-            <span className="admin-header-title">Dashboard</span>
+            <span className="admin-header-title"></span>
           </div>
           <div className="right-header">
             <Tooltip placement="bottomLeft" title="Tin nhắn">

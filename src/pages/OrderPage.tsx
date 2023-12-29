@@ -5,8 +5,9 @@ import store from "../store";
 import { getOrder, updateOrder } from "../store/actions/actionOrder";
 import { Button, Drawer, Image, Popconfirm, message } from "antd";
 import { getAPI, putAPI } from "../api";
-import { convertPriceToVND } from "../constants";
+import { convertPriceToVND, dateFormat } from "../constants";
 import { useSelector } from "react-redux";
+import moment from "moment";
 import axios from "axios";
 const OrderPage = () => {
   useDocumentTitle("Đơn hàng");
@@ -28,7 +29,15 @@ const OrderPage = () => {
     setDataOrder([]);
     setOpen(false);
   };
+  const onNotify = (status: string) => {
+    if (status === "success") {
+      message.success("Duyệt đơn thành công");
+    } else {
+      message.error("Duyệt đơn thất bại");
+    }
+  };
   const openEdit = async (record: any) => {
+    // console.log(moment().format("yyyy:MM:DD hh:mm:ss"));
     const response = await getAPI(`/order/${record.id}`);
     if (response.status === 200) {
       if (response.data.status === "success") {
@@ -43,11 +52,11 @@ const OrderPage = () => {
       ...orderInfo,
       status: "chờ giao hàng",
       id_staff: dataUser.user.id,
+      create_at: dateFormat(orderInfo.create_at),
+      update_at: moment().format("yyyy:MM:DD hh:mm:ss"),
     };
 
-    store.dispatch(
-      updateOrder(body, message.success("Duyệt đơn thành công"), onClose)
-    );
+    store.dispatch(updateOrder(body, onNotify, onClose));
   };
   useEffect(() => {
     store.dispatch(getOrder());
@@ -136,9 +145,12 @@ const OrderPage = () => {
             </div>
           </div>
           <div className="order-detail-action">
-            <Button type="primary" onClick={() => onFinish()}>
-              Duyệt đơn
-            </Button>
+            {orderInfo.status === "chờ giao hàng" ? null : (
+              <Button type="primary" onClick={() => onFinish()}>
+                Duyệt đơn
+              </Button>
+            )}
+
             <Popconfirm
               title="Hủy đơn hàng"
               description="Bạn chắc chắn muốn hủy đơn này?"
@@ -147,7 +159,7 @@ const OrderPage = () => {
               onConfirm={() => console.log("Huỷ đơn")}
             >
               <Button type="primary" danger>
-                Xóa
+                Hủy đơn
               </Button>
             </Popconfirm>
           </div>

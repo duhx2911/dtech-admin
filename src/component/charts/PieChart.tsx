@@ -1,37 +1,20 @@
 import { Pie } from "@ant-design/plots";
+import useFetch from "../../hooks/useFetch";
+import { useEffect, useState } from "react";
 
 function PieChart() {
-  const data = [
-    {
-      type: "iPhone",
-      value: 57,
-    },
-    {
-      type: "iPad",
-      value: 25,
-    },
-    {
-      type: "Mac",
-      value: 18,
-    },
-    {
-      type: "Watch",
-      value: 15,
-    },
-    {
-      type: "Âm thanh",
-      value: 10,
-    },
-    {
-      type: "Phụ kiện",
-      value: 5,
-    },
-  ];
+  const { data: dataEChart } = useFetch("revenue");
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    if (dataEChart && dataEChart.length) {
+      setData(dataEChart);
+    }
+  }, [dataEChart]);
   const config = {
     appendPadding: 10,
     data,
-    angleField: "value",
-    colorField: "type",
+    angleField: "total",
+    colorField: "category",
     radius: 0.8,
     label: {
       type: "inner",

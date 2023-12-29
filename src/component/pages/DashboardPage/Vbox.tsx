@@ -1,4 +1,5 @@
 import { Card, Col, Row, Typography } from "antd";
+import { convertPriceToVND } from "../../../constants";
 
 const dollor = [
   <svg
@@ -88,32 +89,32 @@ const cart = [
 ];
 const count = [
   {
-    today: "Today’s Sales",
-    title: "$53,000",
+    today: "Doanh thu hôm nay",
+    title: convertPriceToVND.format(1400000000),
     persent: "+30%",
     icon: dollor,
     bnb: "bnb2",
   },
   {
-    today: "Today’s Users",
-    title: "3,200",
+    today: "Đơn hàng mới",
+    title: "1200",
+    persent: "10%",
+    icon: cart,
+    bnb: "bnb2",
+  },
+  {
+    today: "Lượt truy cập",
+    title: "200",
     persent: "+20%",
     icon: profile,
     bnb: "bnb2",
   },
   {
-    today: "New Clients",
-    title: "+1,200",
+    today: "Khách hàng mới",
+    title: "100",
     persent: "-20%",
     icon: heart,
     bnb: "redtext",
-  },
-  {
-    today: "New Orders",
-    title: "$13,200",
-    persent: "10%",
-    icon: cart,
-    bnb: "bnb2",
   },
 ];
 const Vbox = () => {
@@ -132,14 +133,14 @@ const Vbox = () => {
         >
           <Card bordered={false} className="criclebox">
             <div className="number">
-              <Row align="middle" gutter={[24, 0]}>
-                <Col xs={18}>
+              <Row align="middle">
+                <Col xs={20}>
                   <span>{c.today}</span>
                   <Title level={3}>
                     {c.title} <small className={c.bnb}>{c.persent}</small>
                   </Title>
                 </Col>
-                <Col xs={6}>
+                <Col xs={4}>
                   <div className="icon-box">{c.icon}</div>
                 </Col>
               </Row>

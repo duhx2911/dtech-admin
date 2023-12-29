@@ -61,3 +61,21 @@ export const convertPriceToVND = new Intl.NumberFormat("vi-VN", {
   style: "currency",
   currency: "VND",
 });
+export const dateFormat = (datetime: any) => {
+  var date = new Date(datetime);
+  var day = date.getDate();
+  var month = date.getMonth() + 1;
+  var year = date.getFullYear().toString();
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var seconds = date.getSeconds();
+
+  var formattedDay = day < 10 ? "0" + day : day;
+  var formattedMonth = month < 10 ? "0" + month : month;
+  var formattedHours = hours < 10 ? "0" + hours : hours;
+  var formattedMinutes = minutes < 10 ? "0" + minutes : minutes;
+  var formattedSeconds = seconds < 10 ? "0" + seconds : seconds;
+
+  const formattedTime = `${year}-${formattedMonth}-${formattedDay} ${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+  return formattedTime;
+};

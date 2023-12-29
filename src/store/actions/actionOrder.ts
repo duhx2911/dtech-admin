@@ -17,6 +17,7 @@ const updateOrder =
   (body: any, notify: any, closeDrawer: any) =>
   async (dispatch: AppDispatch) => {
     const response = await putAPI(`/order/${body.id}`, body);
+    console.log(response.data);
     if (response.status === 200) {
       if (response.data.status === "success") {
         dispatch({
@@ -24,8 +25,8 @@ const updateOrder =
           order: response.data.data,
         });
         closeDrawer();
-        notify();
       }
     }
+    notify(response.data.status);
   };
 export { getOrder, updateOrder };
