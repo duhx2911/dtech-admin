@@ -7,6 +7,7 @@ import { staffReducer } from "./reducers/staffReducer";
 import { userLoginReducer } from "./reducers/loginReducer";
 import { imageProductReducer } from "./reducers/imgProductReducer";
 import { orderReducer } from "./reducers/orderReducer";
+import { promotionReducer } from "./reducers/promotionReducer";
 // import thunk from "redux-thunk";
 
 const reducer = combineReducers({
@@ -17,6 +18,7 @@ const reducer = combineReducers({
   staffReducer: staffReducer,
   imageProductReducer: imageProductReducer,
   order: orderReducer,
+  promotionReducer: promotionReducer,
 });
 // Login
 const userInfoFromLocalStorage = localStorage.getItem("userInfo")

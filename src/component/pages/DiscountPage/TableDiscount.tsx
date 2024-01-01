@@ -1,10 +1,12 @@
-import { Button, Image, Popconfirm, Space } from "antd";
+import { Button, Image, Popconfirm, Space, message } from "antd";
 import Table, { ColumnsType } from "antd/es/table";
-import { Categories, convertPriceToVND } from "../../../constants";
+import { ENV_BE, convertPriceToVND } from "../../../constants";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
 import { useEffect, useState } from "react";
 import useFetch from "../../../hooks/useFetch";
-const TableDiscount = ({ openEdit, deleteCate }: any) => {
+import axios from "axios";
+const TableDiscount = () => {
   const [data, setData] = useState([]);
   const { data: dataPromotion } = useFetch("promotion");
   useEffect(() => {
@@ -12,7 +14,17 @@ const TableDiscount = ({ openEdit, deleteCate }: any) => {
       setData(dataPromotion);
     }
   }, [dataPromotion]);
-  const columns: ColumnsType<Categories> = [
+  const deleteDiscount = async (id: number) => {
+    const res = await axios.put(`${ENV_BE}/products/${id}`, {
+      discount: "none",
+    });
+    if (res.status === 200) {
+      if (res.data.status === "success") {
+        message.success("Xoá thành công");
+      }
+    }
+  };
+  const columns: ColumnsType<any> = [
     {
       title: "Mã sản phẩm",
       dataIndex: "product_code",
@@ -46,18 +58,15 @@ const TableDiscount = ({ openEdit, deleteCate }: any) => {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <Button type="primary" onClick={() => openEdit(record)}>
-            Edit
-          </Button>
           <Popconfirm
             title="Xóa sản phẩm"
             description="Bạn chắc chắn muốn xóa sản phẩm này?"
             okText="Có"
             cancelText="Hủy"
-            onConfirm={() => deleteCate(record.id)}
+            onConfirm={() => deleteDiscount(record.id)}
           >
             <Button type="primary" danger>
-              Delete
+              <DeleteOutlined />
             </Button>
           </Popconfirm>
         </Space>

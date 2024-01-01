@@ -1,0 +1,9 @@
+.create-discount {
+  margin-top: 10px;
+  color: red;
+  text-align: end;
+  cursor: pointer;
+  &:hover {
+    color: $primary-color;
+  }
+}

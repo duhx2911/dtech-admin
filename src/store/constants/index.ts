@@ -11,3 +11,5 @@ export const DELETE_IMAGE = "DELETE_IMAGE";
 export const SAVE_ORDER = "SAVE_ORDERS";
 export const UPDATE_ORDER = "UPDATE_ORDER";
 export const DELETE_ORDER = "DELETE_ORDER";
+
+export const CREATE_DISCOUNT = "CREATE_DISCOUNT";
