@@ -9,6 +9,7 @@ import ProtectedRoutes from "./ProtectRoutes";
 import ImageProductPage from "../pages/ImageProduct";
 import OrderPage from "../pages/OrderPage";
 import DiscountPage from "../pages/DiscountPage";
+import StatisticalPage from "../pages/StatisticalPage";
 // import AdminLayout from "../component/layout";
 const BrowerRouter = () => {
   return (
@@ -23,6 +24,7 @@ const BrowerRouter = () => {
         <Route path="anh-san-pham" element={<ImageProductPage />} />
         <Route path="don-hang" element={<OrderPage />} />
         <Route path="khuyen-mai" element={<DiscountPage />} />
+        <Route path="thong-ke" element={<StatisticalPage />} />
       </Route>
       <Route path="/login" element={<LoginPage />} />
     </Routes>

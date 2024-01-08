@@ -1,8 +1,9 @@
 import { Avatar, Button, Popconfirm, Space } from "antd";
 import Table, { ColumnsType } from "antd/es/table";
-import { Categories } from "../../../constants";
+import { Categories, ENV_BE, dmyFormat } from "../../../constants";
 import { useSelector } from "react-redux";
-const TableStaff = ({ openEdit, deleteCate }: any) => {
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+const TableStaff = ({ openEdit, delStaff }: any) => {
   const dataStaff: any = useSelector<any>((state) => state.staffReducer.staffs);
   const columns: ColumnsType<Categories> = [
     {
@@ -30,13 +31,15 @@ const TableStaff = ({ openEdit, deleteCate }: any) => {
       title: "Ảnh đại diện",
       dataIndex: "avatar",
       key: "avatar",
-      render: (url: string) => <Avatar shape="circle" size={64} src={url} />,
+      render: (value: string) => (
+        <Avatar shape="circle" size={64} src={`${ENV_BE}/getPhoto/${value}`} />
+      ),
     },
 
     {
       title: "Role",
-      dataIndex: "role",
-      key: "role",
+      dataIndex: "role_id",
+      key: "role_id",
     },
     {
       title: "Số điện thoại",
@@ -47,11 +50,15 @@ const TableStaff = ({ openEdit, deleteCate }: any) => {
       title: "Giới tính",
       dataIndex: "gender",
       key: "gender",
+      render: (value: string) => (
+        <p>{value ? (value === "man" ? "Nam" : "Nữ") : null}</p>
+      ),
     },
     {
       title: "Ngày sinh",
       dataIndex: "birthday",
       key: "birthday",
+      render: (value: string) => <p>{value ? dmyFormat(value) : null}</p>,
     },
     {
       title: "Địa chỉ",
@@ -66,17 +73,17 @@ const TableStaff = ({ openEdit, deleteCate }: any) => {
       render: (_, record) => (
         <Space size="middle">
           <Button type="primary" onClick={() => openEdit(record)}>
-            Edit
+            <EditOutlined />
           </Button>
           <Popconfirm
             title="Xóa sản phẩm"
-            description="Bạn chắc chắn muốn xóa sản phẩm này?"
+            description="Bạn chắc chắn muốn xóa ?"
             okText="Có"
             cancelText="Hủy"
-            onConfirm={() => deleteCate(record.id)}
+            onConfirm={() => delStaff(record)}
           >
             <Button type="primary" danger>
-              Delete
+              <DeleteOutlined />
             </Button>
           </Popconfirm>
         </Space>

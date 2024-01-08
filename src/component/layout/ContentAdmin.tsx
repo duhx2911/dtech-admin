@@ -25,6 +25,7 @@ import { NavLink } from "react-router-dom";
 import store from "../../store";
 import { logout } from "../../store/actions/actionLogin";
 import { useSelector } from "react-redux";
+import { ENV_BE } from "../../constants";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -50,7 +51,13 @@ const items: MenuItem[] = [
     "1",
     <HomeOutlined />
   ),
-  getItem("Thống kê", "2", <PieChartOutlined />),
+  getItem(
+    <NavLink className={"nav-admin"} to={"thong-ke"}>
+      {"Thống kê"}
+    </NavLink>,
+    "2",
+    <PieChartOutlined />
+  ),
   getItem(
     <NavLink className={"nav-admin"} to={"don-hang"}>
       {"Đơn hàng"}
@@ -199,7 +206,7 @@ const ContentAdmin = ({ children }: { children: ReactNode }) => {
               >
                 <Avatar
                   size={32}
-                  src={dataUser?.user.avatar}
+                  src={`${ENV_BE}/getPhoto/${dataUser?.user.avatar}`}
                   style={{ cursor: "pointer" }}
                 />
               </Dropdown>

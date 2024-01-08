@@ -1,23 +1,64 @@
-import { Button, Col, Drawer, Form, Input, Row, notification } from "antd";
+import {
+  Button,
+  Col,
+  DatePicker,
+  Drawer,
+  Form,
+  Input,
+  Row,
+  Select,
+  Upload,
+  UploadFile,
+  UploadProps,
+  message,
+} from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { useState, useEffect } from "react";
 import store from "../store";
-import { NotificationPlacement } from "antd/es/notification/interface";
 import TableStaff from "../component/pages/Staff/TableStaff";
-import { getListStaff } from "../store/actions/actionStaff";
+import {
+  createStaff,
+  deleteStaff,
+  getListStaff,
+  updateStaff,
+} from "../store/actions/actionStaff";
 import useDocumentTitle from "../hooks/useDocumentTitle";
+import { ENV_BE } from "../constants";
+import dayjs from "dayjs";
+import axios from "axios";
 enum FLAG {
   EDIT,
   CREATE,
 }
-type NotificationType = "success" | "info" | "warning" | "error";
+
+const { Option } = Select;
 const StaffPage = () => {
   useDocumentTitle("Quản lý nhân viên");
   const [flag, setFlag] = useState(FLAG.CREATE);
   const [open, setOpen] = useState(false);
+  const [oldAvatar, setOldAvatar] = useState("");
   const [form] = Form.useForm();
-  const [api, contextHolder] = notification.useNotification();
 
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const uploadButton = (
+    <div>
+      <PlusOutlined />
+      <div style={{ marginTop: 8 }}>Upload</div>
+    </div>
+  );
+  const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) =>
+    setFileList(newFileList);
+  const deleteImage = (value: any) => {
+    setFileList([]);
+    axios
+      .get(`${ENV_BE}/getPhoto/${value.name}`)
+      .then((res) => {
+        setOldAvatar(value.name);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   const fetchData = async () => {
     store.dispatch(getListStaff());
   };
@@ -25,52 +66,109 @@ const StaffPage = () => {
     setFlag(FLAG.CREATE);
     setOpen(true);
     form.resetFields();
+    setFileList([]);
   };
   const openEdit = (record: any) => {
     setFlag(FLAG.EDIT);
-    form.setFieldsValue(record);
+    if (record.avatar) {
+      setFileList([
+        {
+          uid: `${record.id}`,
+          name: record.avatar,
+          url: `${ENV_BE}/getPhoto/${record.avatar}`,
+          thumbUrl: `${ENV_BE}/getPhoto/${record.avatar}`,
+        },
+      ]);
+    } else {
+      setFileList([]);
+    }
+    form.setFieldsValue({
+      ...record,
+      birthday: record.birthday ? dayjs(record.birthday, "YYYY-MM-DD") : null,
+    });
     setOpen(true);
   };
   const onClose = () => {
     setOpen(false);
+    setOldAvatar("");
   };
-  const openNotification = (
-    placement: NotificationPlacement,
-    type: NotificationType,
-    mess: string
-  ) => {
-    api[type]({
-      message: mess,
-      placement,
-    });
-  };
-  const notify = (status: any) => {
-    if (status === "success") {
-      openNotification("top", "success", "Thành công");
-      form.resetFields();
-      setOpen(false);
-    } else {
-      openNotification("top", "error", "Vui lòng thử lại");
+  const normFile = async (e: any) => {
+    if (Array.isArray(e)) {
+      return e;
     }
+    return e?.fileList;
   };
 
-  const onFinish = (value: any) => {
-    console.log(">>> value: ", value);
+  const onResult = () => {
+    setOpen(false);
+    form.resetFields();
+    message.success("Thêm thành công");
   };
-  const deleteCate = (id: number) => {
-    console.log("delete");
+  const onCreate = async (value: any) => {
+    const avatar = await value?.avatar;
+    var bodyFormData = new FormData();
+    bodyFormData.append("myFile", avatar[0].originFileObj);
+    const res = await axios.post(`${ENV_BE}/uploadfile`, bodyFormData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    if (res.status === 200) {
+      const body = {
+        ...value,
+        birthday: value.birthday.format("YYYY-MM-DD"),
+        avatar: res.data.filename,
+      };
+      store.dispatch(createStaff(body, onResult));
+    }
+  };
+  const onUpdate = async (value: any) => {
+    let body = {
+      ...value,
+      birthday: value.birthday.format("YYYY-MM-DD"),
+    };
+    if (oldAvatar) {
+      axios.delete(`${ENV_BE}/getPhoto/${oldAvatar}`);
+    }
+    if (value.avatar) {
+      const avatar = await value?.avatar;
+      var bodyFormData = new FormData();
+      bodyFormData.append("myFile", avatar[0].originFileObj);
+      const res = await axios.post(`${ENV_BE}/uploadfile`, bodyFormData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      if (res.status === 200) {
+        body = {
+          ...value,
+          birthday: value.birthday.format("YYYY-MM-DD"),
+          avatar: res.data.filename,
+        };
+      }
+    }
+    store.dispatch(updateStaff(body, onResult));
+    // console.log(body);
+  };
+  const onFinish = async (value: any) => {
+    if (flag === FLAG.CREATE) {
+      onCreate(value);
+    } else {
+      onUpdate(value);
+    }
+  };
+  const delStaff = async (record: any) => {
+    if (record.avatar) {
+      axios.delete(`${ENV_BE}/getPhoto/${record.avatar}`);
+    }
+    store.dispatch(deleteStaff(record.id));
   };
   useEffect(() => {
     fetchData();
   });
   return (
     <>
-      {contextHolder}
       <div className="category-admin content-manager">
         <Button type="primary" onClick={openCreate} icon={<PlusOutlined />}>
           Thêm người dùng
         </Button>
-        <TableStaff openEdit={openEdit} deleteCate={deleteCate} />
+        <TableStaff openEdit={openEdit} delStaff={delStaff} />
         <Drawer
           title={
             flag === FLAG.CREATE
@@ -141,7 +239,10 @@ const StaffPage = () => {
                     { required: true, message: "Vui lòng không bỏ trống!" },
                   ]}
                 >
-                  <Input placeholder="Nhập mật khẩu" />
+                  <Input
+                    placeholder="Nhập mật khẩu"
+                    disabled={flag === FLAG.EDIT ? true : false}
+                  />
                 </Form.Item>
               </Col>
               <Col span={12}>
@@ -153,6 +254,83 @@ const StaffPage = () => {
                   ]}
                 >
                   <Input placeholder="Nhập số điện thoại" />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  name="role_id"
+                  label="Phân quyền"
+                  rules={[
+                    { required: true, message: "Vui lòng không bỏ trống!" },
+                  ]}
+                >
+                  <Select placeholder="Vui lòng chọn">
+                    <Option value={1}>Admin</Option>
+                    <Option value={2}>Nhân viên</Option>
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  name="gender"
+                  label="Giới tính"
+                  rules={[
+                    { required: true, message: "Vui lòng không bỏ trống!" },
+                  ]}
+                >
+                  <Select placeholder="Vui lòng chọn">
+                    <Option value="man">Nam</Option>
+                    <Option value="woman">Nữ</Option>
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  name="birthday"
+                  label="Ngày sinh"
+                  rules={[
+                    { required: true, message: "Vui lòng không bỏ trống!" },
+                  ]}
+                >
+                  <DatePicker placeholder="Chọn ngày" />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  name="address"
+                  label="Địa chỉ"
+                  rules={[
+                    { required: true, message: "Vui lòng không bỏ trống!" },
+                  ]}
+                >
+                  <Input placeholder="Nhập địa chỉ" />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  name="avatar"
+                  label="Ảnh đại diện"
+                  valuePropName="myFile"
+                  getValueFromEvent={normFile}
+                  rules={[
+                    { required: true, message: "Vui lòng không bỏ trống!" },
+                  ]}
+                >
+                  <Upload
+                    // action={`${ENV_BE}/uploadfile`}
+                    listType="picture-card"
+                    name="myFile"
+                    fileList={fileList}
+                    beforeUpload={() => {
+                      return false;
+                    }}
+                    maxCount={1}
+                    accept=".png,.jpg,.jpeg,.webp"
+                    onChange={handleChange}
+                    onRemove={deleteImage}
+                  >
+                    {fileList.length >= 1 ? null : uploadButton}
+                  </Upload>
                 </Form.Item>
               </Col>
             </Row>

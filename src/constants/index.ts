@@ -79,3 +79,27 @@ export const dateFormat = (datetime: any) => {
   const formattedTime = `${year}-${formattedMonth}-${formattedDay} ${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
   return formattedTime;
 };
+export const dmyFormat = (datetime: any) => {
+  var date = new Date(datetime);
+  var day = date.getDate();
+  var month = date.getMonth() + 1;
+  var year = date.getFullYear().toString();
+
+  var formattedDay = day < 10 ? "0" + day : day;
+  var formattedMonth = month < 10 ? "0" + month : month;
+
+  const formattedTime = `${year}-${formattedMonth}-${formattedDay}`;
+  return formattedTime;
+};
+export const getDate = (datetime: any) => {
+  var date = new Date(datetime);
+  var day = date.getDate();
+  var month = date.getMonth() + 1;
+  var year = date.getFullYear().toString();
+
+  var formattedDay = day < 10 ? "0" + day : day;
+  var formattedMonth = month < 10 ? "0" + month : month;
+
+  const formattedTime = `${formattedMonth}/${formattedDay}`;
+  return formattedTime;
+};

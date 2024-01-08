@@ -65,10 +65,6 @@ const LoginPage = () => {
             <Form.Item name="remember" valuePropName="checked" noStyle>
               <Checkbox>Nhớ mật khẩu</Checkbox>
             </Form.Item>
-
-            <a className="login-form-forgot" href="/#">
-              Quên mật khẩu?
-            </a>
           </Form.Item>
 
           <Form.Item className="btn-submit">
@@ -80,9 +76,6 @@ const LoginPage = () => {
               Đăng nhập
             </Button>
           </Form.Item>
-          <div className="" style={{ textAlign: "center" }}>
-            Hoặc <a href="/signup">tạo tài khoản ngay!</a>
-          </div>
         </Form>
       </div>
     </div>

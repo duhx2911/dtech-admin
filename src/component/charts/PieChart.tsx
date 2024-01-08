@@ -1,6 +1,7 @@
 import { Pie } from "@ant-design/plots";
 import useFetch from "../../hooks/useFetch";
 import { useEffect, useState } from "react";
+import { convertPriceToVND } from "../../constants";
 
 function PieChart() {
   const { data: dataEChart } = useFetch("revenue");
@@ -16,6 +17,11 @@ function PieChart() {
     angleField: "total",
     colorField: "category",
     radius: 0.8,
+    meta: {
+      total: {
+        formatter: (v: any) => `${convertPriceToVND.format(v)}`,
+      },
+    },
     label: {
       type: "inner",
       content: "{percentage}",

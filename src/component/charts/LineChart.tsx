@@ -1,29 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { Line } from "@ant-design/plots";
+import useFetch from "../../hooks/useFetch";
+import { convertPriceToVND, dateFormat, getDate } from "../../constants";
 
 const LineChart = () => {
+  const { data: dataLineChart } = useFetch("revenue-detail");
   const [data, setData] = useState([]);
-
   useEffect(() => {
-    asyncFetch();
-  }, []);
-
-  const asyncFetch = () => {
-    fetch(
-      "https://gw.alipayobjects.com/os/bmw-prod/55424a73-7cb8-4f79-b60d-3ab627ac5698.json"
-    )
-      .then((response) => response.json())
-      .then((json) => setData(json))
-      .catch((error) => {
-        console.log("fetch data failed", error);
-      });
-  };
+    if (dataLineChart && dataLineChart.length) {
+      setData(dataLineChart);
+    }
+  }, [dataLineChart]);
   const config = {
     data,
-    xField: "year",
-    yField: "value",
-    seriesField: "category",
+    xField: "order_date",
+    yField: "daily_revenue",
+    seriesField: "categoryName",
     smooth: true,
+    meta: {
+      order_date: {
+        formatter: (value: any) => `${getDate(value)}`,
+      },
+      daily_revenue: {
+        formatter: (value: any) => `${convertPriceToVND.format(value)}`,
+      },
+    },
     yAxis: {
       label: {
         formatter: (val: any) =>

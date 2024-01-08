@@ -47,7 +47,7 @@ const ProductAdminPage = () => {
     capacity: null,
     color: null,
     quantity: null,
-    listed_price: null,
+    import_price: null,
     price: null,
     slug: null,
     artwork: null,
@@ -108,7 +108,7 @@ const ProductAdminPage = () => {
         "capacity",
         "color",
         "quantity",
-        "listed_price",
+        "import_price",
         "price",
         "slug",
         "artwork",
@@ -281,13 +281,13 @@ const ProductAdminPage = () => {
             <Row gutter={16}>
               <Col span={12}>
                 <Form.Item
-                  name="listed_price"
-                  label="Giá niêm yết"
+                  name="import_price"
+                  label="Giá nhập"
                   rules={[
                     { required: true, message: "Vui lòng không bỏ trống" },
                   ]}
                 >
-                  <Input placeholder="Nhập giá niêm yết" />
+                  <Input placeholder="Giá nhập" />
                 </Form.Item>
               </Col>
               <Col span={12}>

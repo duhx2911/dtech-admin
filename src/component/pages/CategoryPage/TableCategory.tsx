@@ -2,6 +2,7 @@ import { Button, Popconfirm, Space } from "antd";
 import Table, { ColumnsType } from "antd/es/table";
 import { Categories } from "../../../constants";
 import { useSelector } from "react-redux";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 const TableCategory = ({ openEdit, deleteCate }: any) => {
   const dataCategories: any = useSelector<any>(
     (state) => state.categoryReducer.categories
@@ -29,7 +30,7 @@ const TableCategory = ({ openEdit, deleteCate }: any) => {
       render: (_, record) => (
         <Space size="middle">
           <Button type="primary" onClick={() => openEdit(record)}>
-            Edit
+            <EditOutlined />
           </Button>
           <Popconfirm
             title="Xóa sản phẩm"
@@ -39,7 +40,7 @@ const TableCategory = ({ openEdit, deleteCate }: any) => {
             onConfirm={() => deleteCate(record.id)}
           >
             <Button type="primary" danger>
-              Delete
+              <DeleteOutlined />
             </Button>
           </Popconfirm>
         </Space>

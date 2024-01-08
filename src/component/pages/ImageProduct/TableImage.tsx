@@ -2,6 +2,7 @@ import { Button, Image, Popconfirm, Space } from "antd";
 import Table, { ColumnsType } from "antd/es/table";
 import { Categories, ENV_BE } from "../../../constants";
 import { useSelector } from "react-redux";
+import { DeleteOutlined } from "@ant-design/icons";
 const TableImage = ({ openEdit, deleteCate }: any) => {
   const dataImgProduct: any = useSelector<any>(
     (state) => state.imageProductReducer.images
@@ -36,9 +37,6 @@ const TableImage = ({ openEdit, deleteCate }: any) => {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <Button type="primary" onClick={() => openEdit(record)}>
-            Edit
-          </Button>
           <Popconfirm
             title="Xóa sản phẩm"
             description="Bạn chắc chắn muốn xóa sản phẩm này?"
@@ -47,7 +45,7 @@ const TableImage = ({ openEdit, deleteCate }: any) => {
             onConfirm={() => deleteCate(record.id)}
           >
             <Button type="primary" danger>
-              Delete
+              <DeleteOutlined />
             </Button>
           </Popconfirm>
         </Space>

@@ -1,5 +1,8 @@
 import { Card, Col, Row, Typography } from "antd";
-import { convertPriceToVND } from "../../../constants";
+import { ENV_BE, convertPriceToVND } from "../../../constants";
+import useFetch from "../../../hooks/useFetch";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const dollor = [
   <svg
@@ -87,37 +90,59 @@ const cart = [
     ></path>
   </svg>,
 ];
-const count = [
-  {
-    today: "Doanh thu hôm nay",
-    title: convertPriceToVND.format(1400000000),
-    persent: "+30%",
-    icon: dollor,
-    bnb: "bnb2",
-  },
-  {
-    today: "Đơn hàng mới",
-    title: "1200",
-    persent: "10%",
-    icon: cart,
-    bnb: "bnb2",
-  },
-  {
-    today: "Lượt truy cập",
-    title: "200",
-    persent: "+20%",
-    icon: profile,
-    bnb: "bnb2",
-  },
-  {
-    today: "Khách hàng mới",
-    title: "100",
-    persent: "-20%",
-    icon: heart,
-    bnb: "redtext",
-  },
-];
+
 const Vbox = () => {
+  const [dataRevenue, setDataRevenue] = useState(0);
+  const [soldToday, setSoldToday] = useState(0);
+  const fetchRevenue = async () => {
+    const res = await axios.get(`${ENV_BE}/revenue-today`);
+    if (res.status === 200) {
+      if (res.data.status === "success") {
+        setDataRevenue(res.data.data);
+      }
+    }
+  };
+  const fetchSold = async () => {
+    const res = await axios.get(`${ENV_BE}/sold-today`);
+    if (res.status === 200) {
+      if (res.data.status === "success") {
+        setSoldToday(res.data.data);
+      }
+    }
+  };
+  useEffect(() => {
+    fetchRevenue();
+    fetchSold();
+  }, []);
+  const count = [
+    {
+      today: "Doanh thu hôm nay",
+      title: convertPriceToVND.format(dataRevenue),
+
+      icon: dollor,
+      bnb: "bnb2",
+    },
+    {
+      today: "Đơn hàng mới",
+      title: soldToday,
+
+      icon: cart,
+      bnb: "bnb2",
+    },
+    {
+      today: "Lượt truy cập",
+      title: "200",
+
+      icon: profile,
+      bnb: "bnb2",
+    },
+    {
+      today: "Khách hàng mới",
+      title: "100",
+      icon: heart,
+      bnb: "redtext",
+    },
+  ];
   const { Title } = Typography;
   return (
     <Row className="rowgap-vbox" gutter={[24, 24]}>
@@ -136,9 +161,7 @@ const Vbox = () => {
               <Row align="middle">
                 <Col xs={20}>
                   <span>{c.today}</span>
-                  <Title level={3}>
-                    {c.title} <small className={c.bnb}>{c.persent}</small>
-                  </Title>
+                  <Title level={3}>{c.title}</Title>
                 </Col>
                 <Col xs={4}>
                   <div className="icon-box">{c.icon}</div>
