@@ -26,9 +26,9 @@ const TableDiscount = () => {
   };
   const columns: ColumnsType<any> = [
     {
-      title: "Mã sản phẩm",
-      dataIndex: "product_code",
-      key: "product_code",
+      title: "Id",
+      dataIndex: "id",
+      key: "id",
     },
     {
       title: "Tên sản phẩm",

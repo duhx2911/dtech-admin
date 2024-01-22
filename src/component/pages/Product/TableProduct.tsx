@@ -1,85 +1,32 @@
 import { Avatar, Button, Popconfirm, Space, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
-import { Products } from "../../../constants";
+import { Products, convertPriceToVND } from "../../../constants";
 import { useSelector } from "react-redux";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 const TableProduct = ({ openEdit, deletePrd }: any) => {
-  // const dataRedux: any = useSelector((state) => state);
-  // const dataProduct = dataRedux?.productReducer?.products || [];
   const dataProduct: any = useSelector<any>(
     (state) => state.productReducer.products
   );
-  const dataCategories: any = useSelector<any>(
-    (state) => state.categoryReducer.categories
-  );
+
   const columns: ColumnsType<Products> = [
     {
       title: "Id",
       dataIndex: "id",
       key: "id",
     },
-    // {
-    //   title: "Mã sản phẩm",
-    //   dataIndex: "product_code",
-    //   key: "product_code",
-    //   width: 130,
-    //   render: (text) => <span>{text}</span>,
-    // },
-    // {
-    //   title: "Danh mục",
-    //   dataIndex: "category_id",
-    //   key: "category_id",
-    //   width: 100,
-    //   render: (id) => (
-    //     <span>
-    //       {dataCategories.map((item: any) => {
-    //         return id === item.id ? item.categoryName : null;
-    //       })}
-    //     </span>
-    //   ),
-    // },
     {
       title: "Tên sản phẩm",
       dataIndex: "productName",
       key: "productName",
-    },
-    // {
-    //   title: "Dung lượng",
-    //   dataIndex: "capacity",
-    //   key: "capacity",
-    //   width: 120,
-    //   render: (value: number) => (
-    //     <span>
-    //       {value} {value ? "GB" : null}
-    //     </span>
-    //   ),
-    // },
-    {
-      title: "Màu",
-      dataIndex: "color",
-      key: "color",
     },
     {
       title: "Giá bán",
       dataIndex: "price",
       key: "price",
 
-      render: (value) => (
-        <span>
-          {value.toLocaleString("it-IT", {
-            style: "currency",
-            currency: "VND",
-          })}
-        </span>
-      ),
+      render: (value) => <span>{convertPriceToVND.format(value)}</span>,
     },
 
-    // {
-    //   title: "Số lượng",
-    //   dataIndex: "quantity",
-    //   key: "quantity",
-    //   width: 120,
-    // },
     {
       title: "Ảnh",
       dataIndex: "artwork",
@@ -118,14 +65,7 @@ const TableProduct = ({ openEdit, deletePrd }: any) => {
   ];
   return (
     <div className="table-product">
-      <Table
-        columns={columns}
-        dataSource={dataProduct}
-        pagination={{
-          defaultPageSize: 7,
-        }}
-        rowKey={"id"}
-      />
+      <Table columns={columns} dataSource={dataProduct} rowKey={"id"} />
     </div>
   );
 };

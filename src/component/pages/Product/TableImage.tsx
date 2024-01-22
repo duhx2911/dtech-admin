@@ -3,7 +3,9 @@ import Table, { ColumnsType } from "antd/es/table";
 import { Categories, ENV_BE } from "../../../constants";
 import { useSelector } from "react-redux";
 import { DeleteOutlined } from "@ant-design/icons";
-const TableImage = ({ openEdit, deleteCate }: any) => {
+import store from "../../../store";
+import { deleteImageProduct } from "../../../store/actions/imgProductAction";
+const TableImage = ({ deleteImg }: any) => {
   const dataImgProduct: any = useSelector<any>(
     (state) => state.imageProductReducer.images
   );
@@ -15,9 +17,10 @@ const TableImage = ({ openEdit, deleteCate }: any) => {
       width: 50,
     },
     {
-      title: "Id sản phẩm",
-      dataIndex: "productId",
-      key: "productId",
+      title: "Id chi tiết sản phẩm",
+      dataIndex: "id_productdetail",
+      key: "id_productdetail",
+      width: 280,
     },
     {
       title: "Ảnh",
@@ -27,22 +30,18 @@ const TableImage = ({ openEdit, deleteCate }: any) => {
         <Image width={80} src={`${ENV_BE}/getPhoto/${value}`} />
       ),
     },
-    {
-      title: "Màu",
-      dataIndex: "color",
-      key: "color",
-    },
+
     {
       title: "Action",
       key: "action",
       render: (_, record) => (
         <Space size="middle">
           <Popconfirm
-            title="Xóa sản phẩm"
-            description="Bạn chắc chắn muốn xóa sản phẩm này?"
+            title="Xóa "
+            description="Bạn chắc chắn muốn xóa này?"
             okText="Có"
             cancelText="Hủy"
-            onConfirm={() => deleteCate(record.id)}
+            onConfirm={() => store.dispatch(deleteImageProduct(record))}
           >
             <Button type="primary" danger>
               <DeleteOutlined />

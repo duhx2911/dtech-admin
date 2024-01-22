@@ -1,4 +1,4 @@
-import { Button, Form, Input, Modal, notification } from "antd";
+import { Button, Form, Input, Modal, message } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { useState, useEffect } from "react";
 import TableCategory from "../component/pages/CategoryPage/TableCategory";
@@ -9,18 +9,18 @@ import {
   getListCategory,
   updateCategory,
 } from "../store/actions/actionCategories";
-import { NotificationPlacement } from "antd/es/notification/interface";
+
 import useDocumentTitle from "../hooks/useDocumentTitle";
 enum FLAG {
   EDIT,
   CREATE,
 }
-type NotificationType = "success" | "info" | "warning" | "error";
+
 const CategoryAdminPage = () => {
   const [flag, setFlag] = useState(FLAG.CREATE);
   const [open, setOpen] = useState(false);
   const [form] = Form.useForm();
-  const [api, contextHolder] = notification.useNotification();
+
   useDocumentTitle("Danh mục");
 
   const fetchData = async () => {
@@ -36,23 +36,13 @@ const CategoryAdminPage = () => {
     form.setFieldsValue(record);
     setOpen(true);
   };
-  const openNotification = (
-    placement: NotificationPlacement,
-    type: NotificationType,
-    mess: string
-  ) => {
-    api[type]({
-      message: mess,
-      placement,
-    });
-  };
   const notify = (status: any) => {
     if (status === "success") {
-      openNotification("top", "success", "Thành công");
+      message.success("Thành công");
       form.resetFields();
       setOpen(false);
     } else {
-      openNotification("top", "error", "Vui lòng thử lại");
+      message.error("Vui lòng thử lại");
     }
   };
 
@@ -68,10 +58,9 @@ const CategoryAdminPage = () => {
   };
   useEffect(() => {
     fetchData();
-  });
+  }, []);
   return (
     <>
-      {contextHolder}
       <div className="category-admin content-manager">
         <Button type="primary" onClick={openCreate} icon={<PlusOutlined />}>
           Thêm danh mục

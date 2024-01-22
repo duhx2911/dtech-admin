@@ -70,7 +70,7 @@ const StaffPage = () => {
   };
   const openEdit = (record: any) => {
     setFlag(FLAG.EDIT);
-    if (record.avatar) {
+    if (record.avatar && record.avatar !== "none-avatar.jpg") {
       setFileList([
         {
           uid: `${record.id}`,
@@ -102,7 +102,7 @@ const StaffPage = () => {
   const onResult = () => {
     setOpen(false);
     form.resetFields();
-    message.success("Thêm thành công");
+    message.success("Thành công");
   };
   const onCreate = async (value: any) => {
     const avatar = await value?.avatar;
@@ -128,8 +128,8 @@ const StaffPage = () => {
     if (oldAvatar) {
       axios.delete(`${ENV_BE}/getPhoto/${oldAvatar}`);
     }
-    if (value.avatar) {
-      const avatar = await value?.avatar;
+    const avatar = await value?.avatar;
+    if (avatar.length) {
       var bodyFormData = new FormData();
       bodyFormData.append("myFile", avatar[0].originFileObj);
       const res = await axios.post(`${ENV_BE}/uploadfile`, bodyFormData, {
@@ -142,9 +142,18 @@ const StaffPage = () => {
           avatar: res.data.filename,
         };
       }
+      console.log(body);
+    } else {
+      body = {
+        ...value,
+        birthday: value.birthday.format("YYYY-MM-DD"),
+        avatar: "none-avatar.jpg",
+      };
+      console.log(body);
     }
+
     store.dispatch(updateStaff(body, onResult));
-    // console.log(body);
+    // console.log(value);
   };
   const onFinish = async (value: any) => {
     if (flag === FLAG.CREATE) {
@@ -312,12 +321,8 @@ const StaffPage = () => {
                   label="Ảnh đại diện"
                   valuePropName="myFile"
                   getValueFromEvent={normFile}
-                  rules={[
-                    { required: true, message: "Vui lòng không bỏ trống!" },
-                  ]}
                 >
                   <Upload
-                    // action={`${ENV_BE}/uploadfile`}
                     listType="picture-card"
                     name="myFile"
                     fileList={fileList}

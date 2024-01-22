@@ -2,6 +2,7 @@ import { Pie } from "@ant-design/plots";
 import useFetch from "../../hooks/useFetch";
 import { useEffect, useState } from "react";
 import { convertPriceToVND } from "../../constants";
+import { Empty } from "antd";
 
 function PieChart() {
   const { data: dataEChart } = useFetch("revenue");
@@ -39,7 +40,11 @@ function PieChart() {
       },
     ],
   };
-  return <Pie {...config} />;
+  return data && data.length ? (
+    <Pie {...config} />
+  ) : (
+    <Empty description={"Không có dữ liệu"} />
+  );
 }
 
 export default PieChart;

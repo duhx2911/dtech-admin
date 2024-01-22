@@ -1,3 +1,16 @@
 .table-product {
   margin-top: 20px;
 }
+.product-page {
+  .ant-tabs-nav-list {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background-color: white;
+  }
+  .ant-tabs-tab {
+    width: 50%;
+    justify-content: center;
+  }
+}

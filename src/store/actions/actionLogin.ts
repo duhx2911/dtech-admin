@@ -9,7 +9,8 @@ import {
 import { ENV_BE } from "../../constants";
 
 const login =
-  (username: string, password: string) => async (dispatch: AppDispatch) => {
+  (username: string, password: string, onError: any) =>
+  async (dispatch: AppDispatch) => {
     try {
       dispatch({ type: USER_LOGIN_REQUEST });
       const response = await axios.post(`${ENV_BE}/auth/login`, {
@@ -24,6 +25,7 @@ const login =
         }
       }
     } catch (error: any) {
+      onError(error.response.data);
       const message =
         error.response && error.response.data
           ? error.response.data

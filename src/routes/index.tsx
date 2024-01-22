@@ -6,7 +6,6 @@ import CategoryAdminPage from "../pages/CategoryAdminPage";
 import AccountAdminPage from "../pages/AccountAdminPage";
 import StaffPage from "../pages/StaffPage";
 import ProtectedRoutes from "./ProtectRoutes";
-import ImageProductPage from "../pages/ImageProduct";
 import OrderPage from "../pages/OrderPage";
 import DiscountPage from "../pages/DiscountPage";
 import StatisticalPage from "../pages/StatisticalPage";
@@ -21,7 +20,6 @@ const BrowerRouter = () => {
         <Route path="category" element={<CategoryAdminPage />} />
         <Route path="user" element={<AccountAdminPage />} />
         <Route path="staff" element={<StaffPage />} />
-        <Route path="anh-san-pham" element={<ImageProductPage />} />
         <Route path="don-hang" element={<OrderPage />} />
         <Route path="khuyen-mai" element={<DiscountPage />} />
         <Route path="thong-ke" element={<StatisticalPage />} />

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Line } from "@ant-design/plots";
 import useFetch from "../../hooks/useFetch";
 import { convertPriceToVND, dateFormat, getDate } from "../../constants";
+import { Empty } from "antd";
 
 const LineChart = () => {
   const { data: dataLineChart } = useFetch("revenue-detail");
@@ -34,6 +35,10 @@ const LineChart = () => {
     color: ["#1979C9", "#D62A0D", "#FAA219"],
   };
 
-  return <Line {...config} />;
+  return data && data.length ? (
+    <Line {...config} />
+  ) : (
+    <Empty description={"Không có dữ liệu"} />
+  );
 };
 export default LineChart;

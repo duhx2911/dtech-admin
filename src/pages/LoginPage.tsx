@@ -1,4 +1,4 @@
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Checkbox, Form, Input, message } from "antd";
 import background from "../assets/images/bg-login.jpg";
 import { LockOutlined } from "@ant-design/icons";
 import store from "../store";
@@ -9,7 +9,10 @@ import { useNavigate } from "react-router-dom";
 import useDocumentTitle from "../hooks/useDocumentTitle";
 const LoginPage = () => {
   const onFinish = (values: any) => {
-    store.dispatch(login(values.username, values.password));
+    store.dispatch(login(values.username, values.password, onError));
+  };
+  const onError = (mess: string) => {
+    message.error(mess);
   };
   useDocumentTitle("Đăng nhập");
 

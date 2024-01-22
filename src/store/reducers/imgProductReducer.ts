@@ -7,12 +7,14 @@ import {
 } from "../constants";
 
 const imageProductReducer = (
-  state: { images: ImageProduct[] } = {
+  state: { images: ImageProduct[]; productimgs: any } = {
     images: [],
+    productimgs: [],
   },
   action: {
     images: ImageProduct[];
     image: ImageProduct;
+    productimgs: any;
     id: number;
     type: string;
   }
@@ -20,6 +22,9 @@ const imageProductReducer = (
   switch (action.type) {
     case SAVE_IMAGES: {
       return { ...state, images: action.images || [] };
+    }
+    case "SAVE_LIST_PRODUCT_DETAIL": {
+      return { ...state, productimgs: action.productimgs || [] };
     }
     case SAVE_LIST_IMAGES: {
       let listImage = state.images;

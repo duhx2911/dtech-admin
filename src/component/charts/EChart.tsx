@@ -1,6 +1,7 @@
 import { Column } from "@ant-design/plots";
 import useFetch from "../../hooks/useFetch";
 import { useEffect, useState } from "react";
+import { Empty } from "antd";
 // import { ApexOptions } from "apexcharts";
 
 function EChart() {
@@ -44,7 +45,11 @@ function EChart() {
       },
     },
   };
-  return <Column {...config} />;
+  return data && data.length ? (
+    <Column {...config} />
+  ) : (
+    <Empty description={"Không có dữ liệu"} />
+  );
 }
 
 export default EChart;

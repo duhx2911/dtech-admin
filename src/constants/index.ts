@@ -52,6 +52,13 @@ export interface Order {
   totalPay: number;
   status: string;
 }
+
+export interface ProductDetails {
+  id: number;
+  id_product: number;
+  color: string;
+  quantity: number;
+}
 export const ENV_BE = "http://localhost:8000";
 export const ACCESS_TOKEN = "access-token";
 export const REFRESH_TOKEN = "refresh-token";

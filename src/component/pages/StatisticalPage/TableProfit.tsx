@@ -13,11 +13,6 @@ interface DataType {
 
 const columns: ColumnsType<DataType> = [
   {
-    title: "Id",
-    dataIndex: "idProduct",
-    key: "idProduct",
-  },
-  {
     title: "Tên sản phẩm",
     dataIndex: "productName",
     key: "productName",
@@ -42,7 +37,9 @@ const columns: ColumnsType<DataType> = [
 ];
 
 const TableProfit = ({ data }: any) => {
-  return <Table columns={columns} rowKey={"idProduct"} dataSource={data} />;
+  return (
+    <Table columns={columns} rowKey={"id_productdetail"} dataSource={data} />
+  );
 };
 
 export default TableProfit;

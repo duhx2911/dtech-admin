@@ -34,7 +34,7 @@ const TableCategory = ({ openEdit, deleteCate }: any) => {
           </Button>
           <Popconfirm
             title="Xóa sản phẩm"
-            description="Bạn chắc chắn muốn xóa sản phẩm này?"
+            description="Bạn chắc chắn muốn xóa?"
             okText="Có"
             cancelText="Hủy"
             onConfirm={() => deleteCate(record.id)}
