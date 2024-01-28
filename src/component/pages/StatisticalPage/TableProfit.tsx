@@ -5,7 +5,7 @@ import { convertPriceToVND } from "../../../constants";
 
 interface DataType {
   idProduct: number;
-  productName: string;
+  product_name: string;
   import_price: number;
   sold: number;
   profit: number;
@@ -14,8 +14,8 @@ interface DataType {
 const columns: ColumnsType<DataType> = [
   {
     title: "Tên sản phẩm",
-    dataIndex: "productName",
-    key: "productName",
+    dataIndex: "product_name",
+    key: "product_name",
   },
   {
     title: "Giá nhập",
@@ -38,7 +38,7 @@ const columns: ColumnsType<DataType> = [
 
 const TableProfit = ({ data }: any) => {
   return (
-    <Table columns={columns} rowKey={"id_productdetail"} dataSource={data} />
+    <Table columns={columns} rowKey={"productdetail_id"} dataSource={data} />
   );
 };
 

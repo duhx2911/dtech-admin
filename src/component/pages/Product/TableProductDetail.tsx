@@ -16,8 +16,8 @@ const TableProductDetail = ({ openEdit, deletePrdDetail }: any) => {
     },
     {
       title: "Id sản phẩm",
-      dataIndex: "id_product",
-      key: "id_product",
+      dataIndex: "product_id",
+      key: "product_id",
     },
 
     {

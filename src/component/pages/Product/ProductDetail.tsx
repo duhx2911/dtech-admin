@@ -68,7 +68,11 @@ const ProductDetail = () => {
         deletePrdDetail={deletePrdDetail}
       />
       <Modal
-        title={flag === FLAG.CREATE ? "Thêm danh mục" : "Sửa danh mục"}
+        title={
+          flag === FLAG.CREATE
+            ? "Thêm chi tiết sản phẩm"
+            : "Sửa chi tiết sản phẩm"
+        }
         centered
         open={open}
         onCancel={() => setOpen(false)}
@@ -81,12 +85,12 @@ const ProductDetail = () => {
             </Form.Item>
           ) : null}
 
-          <Form.Item name="id_product" label="Sản phẩm">
-            <Select placeholder="Vui lòng chọn màu">
+          <Form.Item name="product_id" label="Sản phẩm">
+            <Select placeholder="Vui lòng chọn">
               {dataProduct.map((item: Products) => {
                 return (
                   <Option value={item.id} key={item.id}>
-                    {item.productName}
+                    {item.product_name}
                   </Option>
                 );
               })}

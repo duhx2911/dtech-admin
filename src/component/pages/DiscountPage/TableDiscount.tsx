@@ -32,8 +32,8 @@ const TableDiscount = () => {
     },
     {
       title: "Tên sản phẩm",
-      dataIndex: "productName",
-      key: "productName",
+      dataIndex: "product_name",
+      key: "product_name",
     },
     {
       title: "Ảnh",

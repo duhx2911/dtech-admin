@@ -18,14 +18,14 @@ const TableImage = ({ deleteImg }: any) => {
     },
     {
       title: "Id chi tiết sản phẩm",
-      dataIndex: "id_productdetail",
-      key: "id_productdetail",
+      dataIndex: "productdetail_id",
+      key: "productdetail_id",
       width: 280,
     },
     {
       title: "Ảnh",
-      dataIndex: "imgUrl",
-      key: "imgUrl",
+      dataIndex: "img_url",
+      key: "img_url",
       render: (value) => (
         <Image width={80} src={`${ENV_BE}/getPhoto/${value}`} />
       ),

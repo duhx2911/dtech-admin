@@ -1,20 +1,28 @@
-import { Button, Space } from "antd";
+import { Button, Space, Input } from "antd";
 import Table, { ColumnsType } from "antd/es/table";
-import { Categories, convertPriceToVND } from "../../../constants";
+import { convertPriceToVND } from "../../../constants";
 import { useSelector } from "react-redux";
+import { useState } from "react";
+const { Search } = Input;
 const TableOrder = ({ openEdit }: any) => {
   const dataOrder: any = useSelector<any>((state) => state.order.orders);
-  const columns: ColumnsType<Categories> = [
+  const [searchText, setSearchText] = useState("");
+  const columns: ColumnsType<any> = [
     {
       title: "Id",
       dataIndex: "id",
       key: "id",
       width: 50,
+      sorter: (a, b) => a.id - b.id,
     },
     {
       title: "Mã đơn hàng",
-      dataIndex: "orderCode",
-      key: "orderCode",
+      dataIndex: "order_code",
+      key: "order_code",
+      filteredValue: [searchText],
+      onFilter: (value: any, record: any) => {
+        return record.order_code.includes(value);
+      },
     },
     {
       title: "Tên",
@@ -39,14 +47,14 @@ const TableOrder = ({ openEdit }: any) => {
     },
     {
       title: "Tổng thanh toán",
-      dataIndex: "totalPay",
-      key: "totalPay",
+      dataIndex: "total_pay",
+      key: "total_pay",
       render: (value) => <span>{convertPriceToVND.format(value)}</span>,
     },
     {
       title: "Hình thức thanh toán",
-      dataIndex: "paymentMethod",
-      key: "paymentMethod",
+      dataIndex: "payment_method",
+      key: "payment_method",
     },
     {
       title: "Trạng thái",
@@ -67,12 +75,21 @@ const TableOrder = ({ openEdit }: any) => {
   ];
 
   return (
-    <Table
-      style={{ marginTop: 20 }}
-      columns={columns}
-      dataSource={dataOrder}
-      rowKey={"id"}
-    />
+    <>
+      <div style={{ width: 300 }}>
+        <Search
+          placeholder="Nhập mã đơn hàng"
+          enterButton
+          onSearch={(value: string) => setSearchText(value)}
+        />
+      </div>
+      <Table
+        style={{ marginTop: 20 }}
+        columns={columns}
+        dataSource={dataOrder}
+        rowKey={"id"}
+      />
+    </>
   );
 };
 export default TableOrder;

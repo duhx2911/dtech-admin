@@ -36,7 +36,7 @@ const createImageProduct = (body: any) => async (dispatch: AppDispatch) => {
 };
 const deleteImageProduct = (record: any) => async (dispatch: AppDispatch) => {
   try {
-    await axios.delete(`${ENV_BE}/getPhoto/${record.imgUrl}`);
+    await axios.delete(`${ENV_BE}/getPhoto/${record.img_url}`);
     const response = await axios.delete(`${ENV_BE}/imageProduct/${record.id}`);
     if (response.status === 200) {
       if (response.data.status === "success") {

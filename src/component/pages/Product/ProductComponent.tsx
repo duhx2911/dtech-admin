@@ -38,7 +38,7 @@ const ProductComponent = () => {
   const [editData, setEditData] = useState({
     id: null,
     product_code: null,
-    productName: null,
+    product_name: null,
     category_id: null,
     capacity: null,
     color: null,
@@ -87,7 +87,7 @@ const ProductComponent = () => {
     setEditData(
       form.getFieldsValue([
         "id",
-        "productName",
+        "product_name",
         "category_id",
         "capacity",
         "import_price",
@@ -172,7 +172,7 @@ const ProductComponent = () => {
             <Row gutter={16}>
               <Col span={24}>
                 <Form.Item
-                  name="productName"
+                  name="product_name"
                   label="Tên sản phẩm"
                   rules={[
                     { required: true, message: "Vui lòng không bỏ trống!" },
@@ -195,7 +195,7 @@ const ProductComponent = () => {
                     {dataCategories.map((item: any) => {
                       return (
                         <Option value={item.id} key={item.id}>
-                          {item.categoryName}
+                          {item.category_name}
                         </Option>
                       );
                     })}

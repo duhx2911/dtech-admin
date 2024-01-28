@@ -139,7 +139,7 @@ const DiscountPage = () => {
                   {listCategory.map((item: Categories) => {
                     return (
                       <Option key={item.id} value={item.id}>
-                        {item.categoryName}
+                        {item.category_name}
                       </Option>
                     );
                   })}
@@ -149,7 +149,7 @@ const DiscountPage = () => {
                   {listProduct.map((item: Products) => {
                     return (
                       <Option key={item.id} value={item.id}>
-                        {item.productName}
+                        {item.product_name}
                       </Option>
                     );
                   })}

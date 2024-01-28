@@ -80,7 +80,7 @@ const CategoryAdminPage = () => {
               </Form.Item>
             ) : null}
 
-            <Form.Item label="Tên danh mục" name="categoryName">
+            <Form.Item label="Tên danh mục" name="category_name">
               <Input placeholder="Nhập tên danh mục" autoComplete="off" />
             </Form.Item>
 

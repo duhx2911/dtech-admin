@@ -75,10 +75,10 @@ const ImageProduct = () => {
 
   const onFinish = async (value: any) => {
     try {
-      const imgUrl = await value?.imgUrl;
+      const img_url = await value?.img_url;
 
-      imgUrl.map(async (item: any) => {
-        const newValues = { ...value, imgUrl: item.response.filename };
+      img_url.map(async (item: any) => {
+        const newValues = { ...value, img_url: item.response.filename };
         console.log(newValues);
         await store.dispatch(createImageProduct(newValues));
       });
@@ -118,19 +118,19 @@ const ImageProduct = () => {
               </Form.Item>
             ) : null}
 
-            <Form.Item name="id_productdetail" label="Sản phẩm">
+            <Form.Item name="productdetail_id" label="Sản phẩm">
               <Select placeholder="Vui lòng chọn">
                 {dataProduct.map((item: any) => {
                   return (
                     <Option value={item.id} key={item.id}>
-                      {item.productName} - {item.color}
+                      {item.product_name} - {item.color}
                     </Option>
                   );
                 })}
               </Select>
             </Form.Item>
             <Form.Item
-              name="imgUrl"
+              name="img_url"
               label="Ảnh"
               valuePropName="myFile"
               getValueFromEvent={normFile}

@@ -67,10 +67,10 @@ const AllOrder = () => {
             return (
               <div className="order-product-item" key={item.id}>
                 <p>{item.sl}x</p>
-                <Image width={80} src={item.artwork} alt={item.productName} />
+                <Image width={80} src={item.artwork} alt={item.product_name} />
                 <div className="order-product-info">
                   <p>
-                    {item.productName} {item.color ? `- ${item.color}` : null}
+                    {item.product_name} {item.color ? `- ${item.color}` : null}
                   </p>
                   <p>{convertPriceToVND.format(item.price)}</p>
                 </div>
@@ -82,7 +82,7 @@ const AllOrder = () => {
           <h6>2. Thông tin thanh toán và nhận hàng</h6>
           <div className="order-info-item">
             <p className="order-info-title">Mã đơn hàng:</p>
-            <p>{orderInfo.orderCode}</p>
+            <p>{orderInfo.order_code}</p>
           </div>
           <div className="order-info-item">
             <p className="order-info-title">Tên người nhận:</p>
@@ -98,7 +98,7 @@ const AllOrder = () => {
           </div>
           <div className="order-info-item">
             <p className="order-info-title">Tổng cộng:</p>
-            <p>{convertPriceToVND.format(orderInfo.totalPrice)}</p>
+            <p>{convertPriceToVND.format(orderInfo.total_price)}</p>
           </div>
           <div className="order-info-item">
             <p className="order-info-title">Giảm giá:</p>
@@ -106,11 +106,11 @@ const AllOrder = () => {
           </div>
           <div className="order-info-item">
             <p className="order-info-title">Phí vận chuyển:</p>
-            <p>{convertPriceToVND.format(orderInfo.shippingFee)}</p>
+            <p>{convertPriceToVND.format(orderInfo.shipping_fee)}</p>
           </div>
           <div className="order-info-item">
             <p className="order-info-title">Tổng thanh toán:</p>
-            <p>{convertPriceToVND.format(orderInfo.totalPay)}</p>
+            <p>{convertPriceToVND.format(orderInfo.total_pay)}</p>
           </div>
           <div className="order-info-item">
             <p className="order-info-title">Trạng thái:</p>

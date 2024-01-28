@@ -16,8 +16,8 @@ const TableCategory = ({ openEdit, deleteCate }: any) => {
     },
     {
       title: "Tên danh mục",
-      dataIndex: "categoryName",
-      key: "categoryName",
+      dataIndex: "category_name",
+      key: "category_name",
     },
     {
       title: "Đường dẫn",

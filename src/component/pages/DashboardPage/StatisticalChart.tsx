@@ -26,7 +26,7 @@ const StatisticalChart = () => {
         <Col xs={24} sm={24} md={24} lg={24} xl={24} className="mb-24">
           <Card bordered={false} className="criclebox h-full">
             <h4 style={{ textAlign: "center", marginBottom: 10 }}>
-              Thống kê lượt bán
+              Thống kê doanh thu
             </h4>
             <LineChart />
           </Card>

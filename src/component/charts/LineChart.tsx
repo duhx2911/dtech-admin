@@ -16,7 +16,7 @@ const LineChart = () => {
     data,
     xField: "order_date",
     yField: "daily_revenue",
-    seriesField: "categoryName",
+    seriesField: "category_name",
     smooth: true,
     meta: {
       order_date: {

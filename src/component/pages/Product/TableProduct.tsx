@@ -1,23 +1,30 @@
-import { Avatar, Button, Popconfirm, Space, Table } from "antd";
+import { Avatar, Button, Input, Popconfirm, Space, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { Products, convertPriceToVND } from "../../../constants";
 import { useSelector } from "react-redux";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { useState } from "react";
+const { Search } = Input;
 const TableProduct = ({ openEdit, deletePrd }: any) => {
   const dataProduct: any = useSelector<any>(
     (state) => state.productReducer.products
   );
-
+  const [searchText, setSearchText] = useState("");
   const columns: ColumnsType<Products> = [
     {
       title: "Id",
       dataIndex: "id",
       key: "id",
+      sorter: (a, b) => a.id - b.id,
     },
     {
       title: "Tên sản phẩm",
-      dataIndex: "productName",
-      key: "productName",
+      dataIndex: "product_name",
+      key: "product_name",
+      filteredValue: [searchText],
+      onFilter: (value: any, record) => {
+        return record.product_name.includes(value);
+      },
     },
     {
       title: "Giá bán",
@@ -65,6 +72,13 @@ const TableProduct = ({ openEdit, deletePrd }: any) => {
   ];
   return (
     <div className="table-product">
+      <div style={{ width: 300, marginBottom: 10 }}>
+        <Search
+          placeholder="Nhập tên sản phẩm"
+          enterButton
+          onSearch={(value: string) => setSearchText(value)}
+        />
+      </div>
       <Table columns={columns} dataSource={dataProduct} rowKey={"id"} />
     </div>
   );

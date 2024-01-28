@@ -2,7 +2,7 @@ export interface Products {
   id: number;
   product_code: string;
   category_id: number;
-  productName: string;
+  product_name: string;
   capacity: number;
   color: string;
   artwork: string;
@@ -14,12 +14,12 @@ export interface Products {
 export interface ImageProduct {
   id: number;
   productId: number;
-  imgUrl: string;
+  img_url: string;
   color: string;
 }
 export interface Categories {
   id: number;
-  categoryName: string;
+  category_name: string;
   slug: string;
 }
 export interface Staff {
@@ -38,24 +38,24 @@ export interface Staff {
 
 export interface Order {
   id: number;
-  orderCode: string;
+  order_code: string;
   id_staff: number;
   fullname: string;
   address: string;
   email: string;
-  paymentMethod: string;
+  payment_method: string;
   phone: string;
   voucher: string;
   discount: number;
-  shippingFee: number;
-  totalPrice: number;
-  totalPay: number;
+  shipping_fee: number;
+  total_price: number;
+  total_pay: number;
   status: string;
 }
 
 export interface ProductDetails {
   id: number;
-  id_product: number;
+  product_id: number;
   color: string;
   quantity: number;
 }
@@ -102,7 +102,7 @@ export const getDate = (datetime: any) => {
   var date = new Date(datetime);
   var day = date.getDate();
   var month = date.getMonth() + 1;
-  var year = date.getFullYear().toString();
+  // var year = date.getFullYear().toString();
 
   var formattedDay = day < 10 ? "0" + day : day;
   var formattedMonth = month < 10 ? "0" + month : month;
