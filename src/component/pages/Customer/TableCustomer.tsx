@@ -3,7 +3,7 @@ import Table, { ColumnsType } from "antd/es/table";
 import { Categories, ENV_BE, dmyFormat } from "../../../constants";
 import { useSelector } from "react-redux";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
-const TableStaff = ({ openEdit, delStaff }: any) => {
+const TableCustomer = ({ openEdit, delStaff }: any) => {
   const dataStaff: any = useSelector<any>((state) => state.staffReducer.staffs);
   const columns: ColumnsType<Categories> = [
     {
@@ -34,12 +34,6 @@ const TableStaff = ({ openEdit, delStaff }: any) => {
       render: (value: string) => (
         <Avatar shape="circle" size={64} src={`${ENV_BE}/getPhoto/${value}`} />
       ),
-    },
-
-    {
-      title: "Role",
-      dataIndex: "role_id",
-      key: "role_id",
     },
     {
       title: "Số điện thoại",
@@ -101,4 +95,4 @@ const TableStaff = ({ openEdit, delStaff }: any) => {
     />
   );
 };
-export default TableStaff;
+export default TableCustomer;

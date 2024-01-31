@@ -15,7 +15,6 @@ import {
 import { PlusOutlined } from "@ant-design/icons";
 import { useState, useEffect } from "react";
 import store from "../store";
-import TableStaff from "../component/pages/Staff/TableStaff";
 import {
   createStaff,
   deleteStaff,
@@ -26,13 +25,14 @@ import useDocumentTitle from "../hooks/useDocumentTitle";
 import { ENV_BE } from "../constants";
 import dayjs from "dayjs";
 import axios from "axios";
+import TableCustomer from "../component/pages/Customer/TableCustomer";
 enum FLAG {
   EDIT,
   CREATE,
 }
 
 const { Option } = Select;
-const StaffPage = () => {
+const CustomerPage = () => {
   useDocumentTitle("Quản lý nhân viên");
   const [flag, setFlag] = useState(FLAG.CREATE);
   const [open, setOpen] = useState(false);
@@ -116,6 +116,7 @@ const StaffPage = () => {
         ...value,
         birthday: value.birthday.format("YYYY-MM-DD"),
         avatar: res.data.filename,
+        role_id: 0,
       };
       store.dispatch(createStaff(body, onResult));
     }
@@ -162,11 +163,18 @@ const StaffPage = () => {
       onUpdate(value);
     }
   };
+  const notify = (status: string) => {
+    if (status === "success") {
+      message.success("Thành công");
+    } else {
+      message.error("Vui lòng thử lại");
+    }
+  };
   const delStaff = async (record: any) => {
     if (record.avatar) {
       axios.delete(`${ENV_BE}/getPhoto/${record.avatar}`);
     }
-    store.dispatch(deleteStaff(record.id));
+    store.dispatch(deleteStaff(record.id, notify));
   };
   useEffect(() => {
     fetchData();
@@ -177,7 +185,7 @@ const StaffPage = () => {
         <Button type="primary" onClick={openCreate} icon={<PlusOutlined />}>
           Thêm người dùng
         </Button>
-        <TableStaff openEdit={openEdit} delStaff={delStaff} />
+        <TableCustomer openEdit={openEdit} delStaff={delStaff} />
         <Drawer
           title={
             flag === FLAG.CREATE
@@ -267,20 +275,6 @@ const StaffPage = () => {
               </Col>
               <Col span={12}>
                 <Form.Item
-                  name="role_id"
-                  label="Phân quyền"
-                  rules={[
-                    { required: true, message: "Vui lòng không bỏ trống!" },
-                  ]}
-                >
-                  <Select placeholder="Vui lòng chọn">
-                    <Option value={1}>Admin</Option>
-                    <Option value={2}>Nhân viên</Option>
-                  </Select>
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
                   name="gender"
                   label="Giới tính"
                   rules={[
@@ -358,4 +352,4 @@ const StaffPage = () => {
     </>
   );
 };
-export default StaffPage;
+export default CustomerPage;

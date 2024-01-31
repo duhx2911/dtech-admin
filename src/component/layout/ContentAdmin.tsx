@@ -85,17 +85,12 @@ const items: MenuItem[] = [
       </NavLink>,
       "product"
     ),
+
     getItem(
-      <NavLink className={"nav-admin"} to={"user"}>
-        {"Nguời dùng"}
+      <NavLink className={"nav-admin"} to={"customer"}>
+        {"Người dùng"}
       </NavLink>,
       "customer"
-    ),
-    getItem(
-      <NavLink className={"nav-admin"} to={"staff"}>
-        {"Nhân viên"}
-      </NavLink>,
-      "staff"
     ),
   ]),
 ];

@@ -56,7 +56,7 @@ const deleteStaff =
       }
     }
     if (callback) {
-      callback();
+      callback(response.data.status);
     }
   };
 export { getListStaff, createStaff, deleteStaff, updateStaff };
