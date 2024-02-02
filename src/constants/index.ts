@@ -59,7 +59,8 @@ export interface ProductDetails {
   color: string;
   quantity: number;
 }
-export const ENV_BE = "http://localhost:8000";
+// export const ENV_BE = "http://localhost:8000";
+export const ENV_BE = "https://shopduhx.online";
 export const ACCESS_TOKEN = "access-token";
 export const REFRESH_TOKEN = "refresh-token";
 export const USER_INFO = "user-info";

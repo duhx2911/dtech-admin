@@ -10,16 +10,18 @@ const StatisticalPage = () => {
   useDocumentTitle("Thống kê");
   const [dataStatistic, setDataStatistic] = useState([]);
   const onFinish = async (value: any) => {
-    const body = {
-      fromdate: value.fromdate.format("YYYY-MM-DD"),
-      todate: value.todate.format("YYYY-MM-DD"),
-    };
-    const response = await axios.post(`${ENV_BE}/profit`, body);
-    if (response.status === 200) {
-      if (response.data.status === "success") {
-        setDataStatistic(response.data.data);
-      } else {
-        message.error("Vui lòng thử lại.");
+    if (value.statisticOption === "profit") {
+      const body = {
+        fromdate: value.fromdate.format("YYYY-MM-DD"),
+        todate: value.todate.format("YYYY-MM-DD"),
+      };
+      const response = await axios.post(`${ENV_BE}/profit`, body);
+      if (response.status === 200) {
+        if (response.data.status === "success") {
+          setDataStatistic(response.data.data);
+        } else {
+          message.error("Vui lòng thử lại.");
+        }
       }
     }
   };
